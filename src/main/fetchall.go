@@ -33,11 +33,13 @@ func fetch ( url string, ch chan<- string ) {
 	}
 
 	nbytes, err := io.Copy( ioutil.Discard, resp.Body )
+	resp.Body.Close()
+
 	if err != nil {
 		ch <- fmt.Sprintf( "error reading: %s: %v", url, err )
 		return
 	}
 
 	sec := time.Since(start).Seconds()
-	fmt.Sprintf( "%.2fs %7d %s", sec, nbytes, url)
+	ch <- fmt.Sprintf( "%.2fs %7d %s", sec, nbytes, url)
 }
