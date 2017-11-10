@@ -1,1 +1,1 @@
-NKB test golang
+test golang
